@@ -1,4 +1,4 @@
-const UserModel= require("../models/userModel")
+/*const UserModel= require("../models/userModel")
 
 const createUser= async function (req, res) {
     let data= req.body
@@ -12,4 +12,4 @@ const getUsersData= async function (req, res) {
 }
 
 module.exports.createUser= createUser
-module.exports.getUsersData= getUsersData
+module.exports.getUsersData= getUsersData*/
