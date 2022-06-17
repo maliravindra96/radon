@@ -7,8 +7,10 @@ const userSchema = new mongoose.Schema( {
         type: String,
         required: true
     },
+    
     emailId: String,
     password: String,
+    
     isDeleted:{
         type:Boolean,
         Default:false
