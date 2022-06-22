@@ -64,9 +64,9 @@ res.status(200).send({
 
   
 
-  catch (err) {
+catch(err) {
 
     res.status(500).send({ error: err.message })
 
 }
-
+module.exports.UpdateBlog = UpdateBlog;
