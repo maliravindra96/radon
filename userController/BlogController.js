@@ -37,13 +37,24 @@ const UpdateBlog = async function (req, res) {
                 msg: "SubCategory is also   Required"
             })
 
-        let update = await blogModel.findByIdAndUpdate(blog_Id)
+        //     let userData = req.body;
+        //     let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData);
+        //     res.status(200).send({ status: updatedUser, data: updatedUser });
+        //    }
+
+
+
+        let Blogdata= req.body;
+        let update = await blogModel.findByIdAndUpdate({_id:blog_Id},Blogdata)
+        //{ $push: { <field1>: { <modifier1>: <value1>, ... }, ... } }
+       //to update push data 
+        res.status(200).send({status:true,data:update});
         
         return
          res.status(404).send("No such user exists");
     }
 }
-let checkBlog = await blogModel.findById(blog_Id)
+let checkBlog = await BlogModel.findById(blog_Id)
 
 if (!checkBlog)
     return res.status(404).send({
