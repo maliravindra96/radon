@@ -1,5 +1,33 @@
+<<<<<<< HEAD
 const BlogModel = require("../Model/BlogModel")
 const AuthorModel = require("../Model/AuthorModel")
+=======
+<<<<<<< HEAD
+const BlogModel = require("../Model/BlogModel")
+
+const getBlogs = async function (req, res) {
+
+  try {
+    let authorId = req.params.authorId;
+    let catagory = req.params.catagory;
+    let tags = req.params.tag;
+    let subcatagory = req.params.subcategory;
+
+
+    let authorDetails = await BlogModel.find(`${authorId}||${catagory}||${tags}||${subcatagory}`);
+    if (!authorDetails || authorDetails.isDeleted)
+      return res.send({ status: false, msg: "No such user exists" });
+    res.send({ status: true, data: authorDetails });
+  }
+
+  catch(err){
+    res.status(500).send({ msg: err.message })
+  }
+      };
+
+module.exports.getBlogs = getBlogs
+=======
+>>>>>>> 335ada66d0742f54eea752e116ca5aede126cb3c
 
 const mongoose = require('mongoose');
 const isValidObjectId = (objectId) => {
@@ -51,6 +79,7 @@ const postBlogs = async function (req, res) {
 //   status: true,
 //   data: {
 
+<<<<<<< HEAD
 //   }
 // }
 // ```
@@ -62,3 +91,14 @@ const postBlogs = async function (req, res) {
 // }
 // ```
 module.exports.postBlogs = postBlogs
+=======
+  
+
+catch(err) {
+
+    res.status(500).send({ error: err.message })
+
+}
+module.exports.UpdateBlog = UpdateBlog;
+>>>>>>> 3c94bfa6b9173ce62d897c9841b2063c734b66b2
+>>>>>>> 335ada66d0742f54eea752e116ca5aede126cb3c
