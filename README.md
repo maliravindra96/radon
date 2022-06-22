@@ -27,7 +27,7 @@ Repository for backend cohort - Radon
 - Return HTTP status 201 on a succesful blog creation. Also return the blog document. The response should be a JSON object like [this](#successful-response-structure) 
 - Create atleast 5 blogs for each author
 
-- Return HTTP status 400 for an invalid request with a response body like [this](#error-response-structure)
+-  Return HTTP status 400 for an invalid request with a response body like[this](#error-response-structure)
 
 ### GET /blogs
 - Returns all blogs in the collection that aren't deleted and are published
@@ -103,10 +103,6 @@ Refer below sample
   msg: ""
 }
 ```
-
-
-
-
 
 ## Collections
 ### Blogs
