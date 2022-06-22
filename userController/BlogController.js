@@ -1,78 +1,97 @@
+<<<<<<< HEAD
+const BlogModel = require("../Model/BlogModel")
+const AuthorModel = require("../Model/AuthorModel")
+=======
+<<<<<<< HEAD
+const BlogModel = require("../Model/BlogModel")
+
+const getBlogs = async function (req, res) {
+
+  try {
+    let authorId = req.params.authorId;
+    let catagory = req.params.catagory;
+    let tags = req.params.tag;
+    let subcatagory = req.params.subcategory;
 
 
-// Updates a blog by changing the its title, body, 
-//adding tags, adding a subcategory. (Assuming tag and subcategory received in body is need to be added)
-// Updates a blog by changing its publish status i.e. adds publishedAt date and set published to true
-//completed ----Check if the blogId exists (must have isDeleted false). If it doesn't, 
-//completed----//return an HTTP status 404 with a response body like this
-//completed--// Return an HTTP status 200 if updated successfully with a body like this
-// Also make sure in the response you return the updated blog document.
+    let authorDetails = await BlogModel.find(`${authorId}||${catagory}||${tags}||${subcatagory}`);
+    if (!authorDetails || authorDetails.isDeleted)
+      return res.send({ status: false, msg: "No such user exists" });
+    res.send({ status: true, data: authorDetails });
+  }
 
+  catch(err){
+    res.status(500).send({ msg: err.message })
+  }
+      };
 
-const UpdateBlog = async function (req, res) {
-    // Updates a blog by changing the its title, body, 
-    //adding tags, adding a subcategory. (Assuming tag and subcategory received in body is need to be added)
-    try {
-        let data = req.body
-        let Blog_Id = req.params.BlogId
+module.exports.getBlogs = getBlogs
+=======
+>>>>>>> 335ada66d0742f54eea752e116ca5aede126cb3c
 
-        //(Assuming tag and subcategory received in body is need to be added)
+const mongoose = require('mongoose');
+const isValidObjectId = (objectId) => {
+    return mongoose.Types.ObjectId.isValid(objectId);
+};
 
-        if (!Blogdata(data.title))
-            return res.status(400).send({
-                status: false,
-                msg: "tags is Required are to update the data"
-            })
-
-        if (!Blogdata(data.body))
-            return res.status(400).send({
-                status: false,
-                msg: "body is  Required to update the data"
-            })
-
-        //as mentioned if there is no subcategory data it will give an error of 400 
-        if (!Blogdata(data.subcategory))
-            return res.status(400).send({
-                status: false,
-                msg: "SubCategory is also   Required"
-            })
-
-        //     let userData = req.body;
-        //     let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData);
-        //     res.status(200).send({ status: updatedUser, data: updatedUser });
-        //    }
-
-
-
-        let Blogdata= req.body;
-        let update = await blogModel.findByIdAndUpdate({_id:blog_Id},Blogdata)
-        //{ $push: { <field1>: { <modifier1>: <value1>, ... }, ... } }
-       //to update push data 
-        res.status(200).send({status:true,data:update});
+const postBlogs = async function (req, res) {
+    // Create a blog document from request body. Get authorId in request body only
+     try {
+        let create = req.body
+        let authorid = req.body.author_id
+        if(!isValidObjectId(authorid)){
+            res.status(400).send({status: false, msg: "author id is not valid"})
+        }
+        let find = await AuthorModel.findById(authorid)
+        if(!find){
+            return res.status(404).send({ status: false, msg: "Author not found" })
+        }
+        let savedData = await BlogModel.create(create)
+        res.status(201).send({ status: true, data: savedData })
         
-        return
-         res.status(404).send("No such user exists");
-    }
+     } catch (error) {
+         res.status(500).send({ msg: error.message })
+ }
 }
-let checkBlog = await BlogModel.findById(blog_Id)
+// } try {
+//         let authorId = req.body.author_id
+//         let Id = await BlogModel.findById(authorId)
+//         if (!Id)
+//             return res.status(400).send({ status: false, msg: "Please Enter Valid Id" })
+//         if(authorId == Id){
+//             let data = req.body
+//             let savedData = await BlogModel.create(data)
+//             res.status(201).send({ status: true, data: savedData })
+//         }
+//     } catch (error) {
+//         res.status(500).send({ msg: error.message })
+//     }
 
-if (!checkBlog)
-    return res.status(404).send({
-        status: false,
-        msg: "Blog Not Found"
-    })
 
-if (checkBlog.isDeleted == true)
-    return res.status(400).send({
-        status: false,
-        msg: "This blog is Deleted"
-    })
 
-res.status(200).send({
-    status: true,
-    data: update
-})
+// - Return HTTP status 201 on a succesful blog creation. Also return the blog document. 
+// The response should be a JSON object like [this](#successful-response-structure) 
+// - Create atleast 5 blogs for each author
+// Return HTTP status 400 for an invalid request with a response body like[this](#error-response-structure)
+// ### Successful Response structure
+// ```yaml
+// {
+//   status: true,
+//   data: {
 
+<<<<<<< HEAD
+//   }
+// }
+// ```
+// ### Error Response structure
+// ```yaml
+// {
+//   status: false,
+//   msg: ""
+// }
+// ```
+module.exports.postBlogs = postBlogs
+=======
   
 
 catch(err) {
@@ -81,3 +100,5 @@ catch(err) {
 
 }
 module.exports.UpdateBlog = UpdateBlog;
+>>>>>>> 3c94bfa6b9173ce62d897c9841b2063c734b66b2
+>>>>>>> 335ada66d0742f54eea752e116ca5aede126cb3c
