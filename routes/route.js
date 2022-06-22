@@ -8,7 +8,7 @@ router.post("/createAuthor", AuthorController.CreateAuthor )
 router.post("/postBlogs", BlogController.postBlogs)
 
 // router.get("/getBlogs", BlogController.getBlogs)
-// router.put("/blogs/:blogId", BlogController)
+ router.put("/blogs/:blogId", BlogController.UpdateBlog)
 
 // router.delete("/blogs/:blogId",BlogController)
 // router.delete("/blogs")
