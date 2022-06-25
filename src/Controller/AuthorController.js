@@ -1,5 +1,6 @@
 // const userModel = require("../models/userModel");
 const jwt = require("jsonwebtoken");
+const { autherization } = require("../MiddleWare/middleWare");
 const AuthorModel = require("../Model/AuthorModel")
 const VALIDATOR = require("../validator/validate")
 
@@ -27,10 +28,24 @@ const CreateAuthor = async function (req, res) {
         }
 
 
-
         let email = req.body.email
         if (!VALIDATOR.isValidEmail(email))
             return res.status(400).send({ msg: `this mail is not valid ::${email}` }) //template literal
+            
+            
+        // const uniqueMail = await AuthorModel.find({email:{email,_id:1}})
+        // if(!uniqueMail) return res.status(400).send({msg:"already mail is existing"})
+            
+        
+
+        let password = req.body.password  
+        if (!VALIDATOR.isValidPassword(password))
+        return res.status(400).send({ msg: `Password should be 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter`})
+
+
+
+         
+
         const CreatedData = await AuthorModel.create(data)
         res.status(201).send({ msg: CreatedData })
     } catch (err) {
@@ -44,10 +59,11 @@ const logIn = async function (req, res){
 
   let user = await AuthorModel.findOne({ email: userName, password: password });
   if (!user)
-    return res.send({
+    return res.status(404).send({
       status: false,
       msg: "username or the password is not corerct",
     });
+    
 
     //after successfully creation of login jwt token will be created
 
@@ -60,8 +76,8 @@ const logIn = async function (req, res){
         "Blog-site"
       );
       res.setHeader("x-api-key", token);
-      res.send({ status: true, token: token });
-    
+      res.status(201).send({ msg:"successfully login", token: token });
+      
 
 
 

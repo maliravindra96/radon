@@ -10,6 +10,11 @@ const isValidEmail = function (value) {
 
 }
 
+const isValidPassword =function(value){
+    if(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(value)){return true}
+    else return false
+}
+
 const isValid = function (value) {
      if(typeof(value)==="undefined"||typeof(value)==null) return false;
 
@@ -20,12 +25,11 @@ const isValid = function (value) {
      
 
     return true; 
-   
+   }
 
-    // function hasBlankSpaces(str){return  str.match(/^\s+$/) !== null;}
-    // var addr = ' ';
-    // if(hasBlankSpaces(addr)){
-    //     console.log('The variable has blank spaces');}
-}
+  
 
-module.exports = { isValidEmail, isValidObjectId, isValid }
+module.exports = { isValidEmail, isValidObjectId, isValid,isValidPassword}
+
+//phone number
+//password
