@@ -1,4 +1,4 @@
-# Radon
+.# Radon
 
 Repository for backend cohort - Radon
 
@@ -127,3 +127,13 @@ Refer below sample
 #### Refer https://jsonplaceholder.typicode.com/guide/ for some fake blogs data.
 
 #### Note: Create a group database and use the same database in connection string by replacing `groupXDatabase
+
+
+// ---------------------------------------------\\
+test-cases
+
+post api - 
+1. email validation
+2. password validaton
+3. trim() space check
+4. 
