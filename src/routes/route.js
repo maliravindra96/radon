@@ -14,7 +14,7 @@ router.post("/logInValid",mid.authenticate,AuthorController.logIn ) // for check
 router.get("/getBlogs",mid.authenticate,BlogController.getBlogs)
 router.put("/blogs/:blogId",mid.authenticate,mid.autherization,BlogController.putBlogs)
 router.delete("/blogs/:blogId",mid.authenticate,mid.autherization,BlogController.deleteUser)//by id
-router.delete("/blogs",mid.authenticate,mid.autherization,BlogController.isdeleted)//by query
+router.delete("/blogs",mid.authenticate,BlogController.isdeleted)//by query
 
 // router.delete("/blogs")
 
