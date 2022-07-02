@@ -2,11 +2,10 @@ const BlogModel = require("../Model/BlogModel")
 const AuthorModel = require("../Model/AuthorModel")
 const { isValidObjectId, isValid } = require("../validator/validate")
 
-
 const postBlogs = async function (req, res) {
-
   try {
     let create = req.body
+    let authorIdFromToken=req.decodedToken.userId
 
     if (!isValid(create.title)) return res.status(400).send({ status: false, message: "Title is required" });
 
@@ -21,6 +20,8 @@ const postBlogs = async function (req, res) {
     create.body = body
 
     if (!create.author_id) return res.status(400).send({ status: false, message: "authorId is required" });
+
+    if(authorIdFromToken != create.author_id)return res.status(400).send({status:false,massage:"author_id is required"})
 
     if (!create.tag) return res.status(400).send({ status: false, message: "tag is required" });
 
@@ -40,7 +41,6 @@ const postBlogs = async function (req, res) {
             newArr.push(tag[i].replace(/\s/g, ""))
         }
         create.subcategory = newArr;
-        
         }
 
     if (!create.category) return res.status(400).send({ status: false, message: "category is required" });
@@ -48,7 +48,7 @@ const postBlogs = async function (req, res) {
     category = category.split(' ').filter(x => x).join('')
     create.category = category
 
-    if (!create.subcategory) return res.status(400).send({ status: false, message: "category is required" });
+    //if (!create.subcategory) return res.status(400).send({ status: false, message: "category is required" });
 
     let authorid = req.body.author_id
     if (Object.keys(create).length == 0) return res.status(400).send({ status: false, msg: "please enter blog data" })
@@ -65,8 +65,8 @@ const postBlogs = async function (req, res) {
    return res.status(500).send({ msg: error.message })
   }
 }
-const getBlogs = async function (req, res) {
 
+const getBlogs = async function (req, res) {
   try {
     let data = req.query
     let authorId = req.query.author_id
@@ -85,7 +85,7 @@ const getBlogs = async function (req, res) {
     data.isDeleted= false;
     data.isPublished= true;
     let findBlogs = await BlogModel.find(data)
-     console.log(findBlogs)
+    // console.log(findBlogs)
     if (!findBlogs) return res.status(404).send({ status: false, msg: "No blog found" })
     if (findBlogs.length == 0) return res.status(404).send({ status: false, msg: "please enter existing Blog" })
 
@@ -109,7 +109,11 @@ const putBlogs = async function (req, res) {
     let findBlog = await BlogModel.findById(id)
 
     if (findBlog.isDeleted == true) res.status(404).send({ msg: "blogs already deleted" })
+    let userLoggedIn = req.decodedToken.userId 
 
+    if (!id == userLoggedIn){
+      return res.status(403).send({ status: false, msg: 'User logged is not allowed to modify the requested users data' })
+    }
     let updatedBlog = await BlogModel.findOneAndUpdate({ _id: id }, {
       $set: {
         title: data.title,
@@ -119,7 +123,7 @@ const putBlogs = async function (req, res) {
         isPublished: true
       },
       $push: {
-        tags: req.body.tags,
+        tag: req.body.tag,
         subcategory: req.body.subcategory
       }
     }, { new: true, upsert: true })
@@ -129,6 +133,7 @@ const putBlogs = async function (req, res) {
     res.status(500).send({ status: false, msg: err.message })
   }
 };
+
 const deleteUser = async function (req, res) {
   try {
     let blogId = req.params.blogId;

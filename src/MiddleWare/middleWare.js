@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const BlogModel = require("../Model/BlogModel");
-const { isValidObjectId } = require("../validator/validate")
+//const { isValidObjectId } = require("../validator/validate")
 
 const authenticate = async function (req, res, next) {
   try {

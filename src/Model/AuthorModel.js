@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 // var validator = require("email-validator");
 
-
-
 const AuthorSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -12,7 +10,6 @@ const AuthorSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
   title: {
     type: String,
     required: true,
@@ -22,7 +19,6 @@ const AuthorSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique:true
- 
   },
   password: {                                 
     type: String,

@@ -1,6 +1,6 @@
 // const userModel = require("../models/userModel");
 const jwt = require("jsonwebtoken");
-const { autherization } = require("../MiddleWare/middleWare");
+//const { autherization } = require("../MiddleWare/middleWare");
 const AuthorModel = require("../Model/AuthorModel")
 const VALIDATOR = require("../validator/validate")
 
@@ -26,7 +26,6 @@ const CreateAuthor = async function (req, res) {
             
         if (!data.password)  return res.status(400).send({ status: false, message: "password is required" });
        
-    
         let email = req.body.email
         if (!VALIDATOR.isValidEmail(email))
             return res.status(400).send({ msg: `this mail is not valid ::${email}` }) //template literal
@@ -59,10 +58,7 @@ const logIn = async function (req, res) {
             status: false,
             msg: "username or the password is not correct",
         });
-
-
-    //after successfully creation of login jwt token will be created
-
+    //after successfully creation of login jwt token will be create
     let token = jwt.sign(
         {
             userId: user._id.toString(),
@@ -77,13 +73,7 @@ const logIn = async function (req, res) {
     catch(err){
         res.status(500).send({msg: err.message})
     }
-
-
-
 }
-
-
-
 
 module.exports.logIn = logIn
 module.exports.CreateAuthor = CreateAuthor
