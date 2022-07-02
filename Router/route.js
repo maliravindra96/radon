@@ -11,7 +11,6 @@ router.post("/functionup/colleges", controller.createCollege)
 // Create Intern API
 router.post("/functionup/interns", internController.createIntern)
 
-
 // Get Intern With College Name
 router.get("/functionup/collegeDetails", internController.getInternsDetails)
 

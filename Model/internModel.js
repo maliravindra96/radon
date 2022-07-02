@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const interSchema = new mongoose.Schema(
+const internSchema = new mongoose.Schema(
     {
         name:{
             type: String,
@@ -33,4 +33,4 @@ const interSchema = new mongoose.Schema(
     }, {timeStamp: true}
 )
 
-module.exports = mongoose.model("Intern", interSchema) // interns
+module.exports = mongoose.model("Intern", internSchema) // interns

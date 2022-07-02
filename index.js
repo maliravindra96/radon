@@ -21,7 +21,7 @@ mongoose
     console.log("connected");
   })
   .catch((error) => {
-    console.log("no connected");
+    console.log("not connected");
   });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
