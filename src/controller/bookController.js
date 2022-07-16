@@ -3,13 +3,13 @@ const BookModel = require('../models/bookModel')
 const UserModel = require('../models/userModel')
 const Validator = require('../validator/validator')
 const ReviewModel = require('../models/reviewModel')
-
+const CoverController = require('../controller/covercontroller')
 
 const createBook = async function (req, res) {
     try {
 
         const requestBody = req.body
-        const { userId, title, ISBN, excerpt, category, subcategory } = requestBody
+        const { userId, title, ISBN, excerpt, category, subcategory} = requestBody
         // to validate the request body is presnt or not 
         if (!Validator.isvalidRequestBody(requestBody)) { return res.status(400).send({ status: false, msg: 'Please enter the userId ' }) }
 
@@ -39,8 +39,27 @@ const createBook = async function (req, res) {
         if (!Validator.isValidBody(subcategory)) { return res.status(400).send({ status: false, msg: 'Please enter the subcategory' }) }
         // validation ends
 
-
-
+        try {
+            let file = req.file
+            if (file) {
+                //upload to s3 and get the uploaded link
+                // res.send the link back to frontend/postman
+                let uploadedFileURL = await CoverController.uploadFile(file)
+                //console.log(uploadedFileURL)
+                requestBody.bookCover = uploadedFileURL
+            }
+            else {
+                res.status(400).send({ msg: "No file found" })
+                return;
+            }
+        }
+        catch (err) {
+            res.status(500).send({
+                status: false,
+                msg: err.message
+            })
+        }
+       
         const createBook = await BookModel.create(requestBody)
         res.status(201).send({ status: true, msg: createBook })
 
@@ -161,7 +180,7 @@ const updateBooksById = async function (req, res) {
         // if Title is present 
         if (title) {
             // to check the title is entered
-            if (Validator.isValidBody(title)) { return res.status(400).send({ status: false, msg: 'Please enter the title' }) }
+            if (!Validator.isValidBody(title)) { return res.status(400).send({ status: false, msg: 'Please enter the title' }) }
             // to check the title in database
             let checkTitle = await BookModel.findOne({ title: title })
             if (checkTitle) { return res.status(404).send({ status: false, message: "This Book title name is already present" }) }
@@ -169,7 +188,7 @@ const updateBooksById = async function (req, res) {
         // if ISBN is present 
         if (ISBN) {
             // to check the ISBN is entered
-            if (Validator.isValidBody(ISBN)) { return res.status(400).send({ status: false, msg: 'Please enter the ISBN' }) }
+            if (!Validator.isValidBody(ISBN)) { return res.status(400).send({ status: false, msg: 'Please enter the ISBN' }) }
             // to check the valid ISBN
             if (!Validator.isValidISBN(ISBN)) { return res.status(404).send({ status: false, message: "Please enter valid ISBN" }) }
             // to check the ISBN in database

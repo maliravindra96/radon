@@ -117,3 +117,10 @@ Each api should have a new request in this collection
 Each request in the collection should be rightly named. Eg Create user, Create book, Get books etc
 Each member of each team should have their tests in running state
 Refer below sample A Postman collection and request sample
+
+
+
+
+AWS
+Assignment:
+ add bookCover(string) key in your bookModel in Book managemt project. When book is being created , take up the book cover as an image , upload it to s3 and save the url in bookCover key. Submit a short explainer video on the same( individually)
