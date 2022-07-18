@@ -1,0 +1,31 @@
+{
+  "name": "project-4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  
+  "scripts": {
+    "start":"npx nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Prashantsingh53ZPH/Project-4.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Prashantsingh53ZPH/Project-4/issues"
+  },
+  "homepage": "https://github.com/Prashantsingh53ZPH/Project-4#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongoose": "^6.4.4",
+    "node-url-shortener": "^2.0.3",
+    "nodemon": "^2.0.19",
+    "shortid": "^2.2.16",
+    "valid-url": "^1.0.9"
+  }
+}
