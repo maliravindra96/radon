@@ -2,7 +2,7 @@ const express=require('express')
 const router=express.Router()
 const UrlController=require('../controller/urlController')
 
-
+// test api
 router.get("/test",function(req,res){
     res.send("My first api for checking the terminal")
 })
